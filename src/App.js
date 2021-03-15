@@ -23,6 +23,7 @@ function App() {
   const [newUser , setNewUser] = useState(false)
 
   const provider = new firebase.auth.GoogleAuthProvider();
+  // ******************************************************************* handel Sign In and Sign out using Google Account
   const handleSignIn = () => {
     firebase.auth()
       .signInWithPopup(provider)
@@ -58,7 +59,7 @@ function App() {
       // An error happened.
     });
   }
-
+// ********************************************************************************** Email And Password ****************************************************************
   const handelBlur = (event) => {
     let isFormValid = true
     if (event.target.name === "email"){
@@ -103,6 +104,7 @@ function App() {
         newUserInfo.error = ''
         newUserInfo.success = true
         setUser(newUserInfo)
+        console.log("Sign In User : " , userCredential.user.displayName)
       })
       .catch((error) => {
         const newUserInfo = {...user}
@@ -128,6 +130,7 @@ function App() {
   }
   return (
     <div className="container">
+      {/* ************************************************* Google Account ****************************** */}
       {
         user.isSignIn ? <button onClick={handelSignOut}>Sign Out</button> : <button onClick={handleSignIn}>Sign in</button>
       }
@@ -142,7 +145,7 @@ function App() {
       <h3>User Email:{user.email}</h3>
       <h3>Password : {user.password}</h3> */}
       
-
+{/* *********************************************************** Our own Authentication**************************************** */}
       <div>
         <form style = {{width: '500px'}} onSubmit = {handelSubmit}>
           <h1>Our own Authentication</h1>
@@ -156,7 +159,8 @@ function App() {
 
               </div>
             }
-            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+            {/* *********************************** Email And Password ******************************************* */}
+            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label> 
             <input onBlur={handelBlur}name = "email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required></input>
 
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
@@ -177,7 +181,7 @@ function App() {
       </div>
       <p style = {{color:"red"}}>{user.error}</p>
       {
-        user.success && <p style = {{color:"green"}}>User {newUser ? "Created" : "Logged In"} Success</p>
+        user.success && <p style = {{color:"green"}}>User {newUser ? "Created" : "Logged In"} Successfully</p>
       }
 
     </div>
